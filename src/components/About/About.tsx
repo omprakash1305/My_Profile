@@ -1,4 +1,5 @@
-import ScrollAnimation from "react-animate-on-scroll";
+import "animate.css/animate.min.css";
+import ScrollAnimation from 'react-animate-on-scroll';
 import boostrapIcon from "../../assets/bootstrap-icon.svg";
 import cIcon from "../../assets/c-icon.png";
 import cssIcon from "../../assets/css-icon.svg";

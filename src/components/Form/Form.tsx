@@ -1,91 +1,66 @@
-import { Container, ContainerSucces } from './styles'
-import { useForm, ValidationError } from '@formspree/react'
-import { toast, ToastContainer } from 'react-toastify'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { useEffect, useState } from 'react'
-import validator from 'validator'
+import React, { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Container } from "./styles";
 
 export function Form() {
-  const [state, handleSubmit] = useForm('xknkpqry')
-  const [validEmail, setValidEmail] = useState(false)
-  const [isHuman, setIsHuman] = useState(false)
-  const [message, setMessage] = useState('')
-  function verifyEmail(email: string) {
-    if (validator.isEmail(email)) {
-      setValidEmail(true)
-    } else {
-      setValidEmail(false)
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isHuman, setIsHuman] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !message || !isHuman) {
+      toast.error("Please fill all fields and verify you are human.", { position: "bottom-left" });
+      return;
     }
-  }
-  useEffect(() => {
-    if (state.succeeded) {
-      toast.success('Email successfully sent!', {
-        position: toast.POSITION.BOTTOM_LEFT,
-        pauseOnFocusLoss: false,
-        closeOnClick: true,
-        hideProgressBar: false,
-        toastId: 'succeeded',
-      })
-    }
-  })
-  if (state.succeeded) {
-    return (
-      <ContainerSucces>
-        <h3>Thanks for getting in touch!</h3>
-        <button
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
-        >
-          Back to the top
-        </button>
-        <ToastContainer />
-      </ContainerSucces>
-    )
-  }
+    toast.success("Email successfully sent!", { position: "bottom-left" });
+    // Add your form submission logic here
+  };
+
   return (
     <Container>
-      <h2>Get in touch using the form</h2>
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="Email"
-          id="email"
           type="email"
-          name="email"
-          onChange={(e) => {
-            verifyEmail(e.target.value)
-          }}
+          placeholder="Your email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
           required
         />
-        <ValidationError prefix="Email" field="email" errors={state.errors} />
         <textarea
+          placeholder="Your message"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
           required
-          placeholder="Send a message to get started."
-          id="message"
-          name="message"
-          onChange={(e) => {
-            setMessage(e.target.value)
-          }}
-        />
-        <ValidationError
-          prefix="Message"
-          field="message"
-          errors={state.errors}
         />
         <ReCAPTCHA
           sitekey="6Lfj9NYfAAAAAP8wPLtzrsSZeACIcGgwuEIRvbSg"
-          onChange={(e) => {
-            setIsHuman(true)
-          }}
-        ></ReCAPTCHA>
+          onChange={() => setIsHuman(true)}
+        />
         <button
           type="submit"
-          disabled={state.submitting || !validEmail || !message || !isHuman}
+          disabled={!email || !message || !isHuman}
         >
           Submit
         </button>
       </form>
       <ToastContainer />
+      {/* <div className="social-media">
+        <a href="https://www.linkedin.com/in/om-prakash-81736a256/" target="_blank" rel="noreferrer">
+          <img src={linkedin} alt="Linkedin" />
+        </a>
+        <a href="https://github.com/omprakash1305/" target="_blank" rel="noreferrer">
+          <img src={githubIcon} alt="GitHub" />
+        </a>
+        <a href="https://t.me/imbatman2004" target="_blank" rel="noreferrer">
+          <img src={telegram} alt="telegram" />
+        </a>
+        <a href="https://www.instagram.com/om_prakash_13_05/" target="_blank" rel="noreferrer">
+          <img src={instagramIcon} alt="Instagram" />
+        </a>
+      </div> */}
     </Container>
-  )
+  );
 }

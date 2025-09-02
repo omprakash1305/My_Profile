@@ -1,20 +1,22 @@
-import ScrollAnimation from "react-animate-on-scroll"
-import { BrowserRouter } from "react-router-dom"
-import { NavHashLink } from "react-router-hash-link"
-import githubIcon from '../../assets/github.svg'
-import Hello from '../../assets/Hello.gif'
-import Illustration from "../../assets/illustration.svg"
-import instagramIcon from '../../assets/instagram.svg'
-import linkedin from '../../assets/linkedin.svg'
-import telegram from '../../assets/telegram.svg'
-import { Container } from "./styles"
+import "animate.css/animate.min.css";
+import ScrollAnimation from 'react-animate-on-scroll';
+import { Fade } from "react-awesome-reveal";
+import { BrowserRouter } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
+import githubIcon from '../../assets/github.svg';
+import Hello from '../../assets/Hello.gif';
+import Illustration from "../../assets/illustration.svg";
+import instagramIcon from '../../assets/instagram.svg';
+import linkedin from '../../assets/linkedin.svg';
+import telegram from '../../assets/telegram.svg';
+import { Container } from "./styles";
 export function Hero() {
   return (
     <Container id="home">
       <div className="hero-text">
-        <ScrollAnimation animateIn="fadeInUp">
-          <p>Hello <img src={Hello} alt="Hello" width="20px"/>, I'm</p>
-        </ScrollAnimation>
+        <Fade>
+          <p>Hello <img src={Hello} alt="Hello" width="20px"/></p>
+        </Fade>
         <ScrollAnimation animateIn="fadeInUp" delay={0.2 * 1000}>
           <h1>Om Prakash S</h1>
         </ScrollAnimation>
